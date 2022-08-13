@@ -1,6 +1,7 @@
 import { Container, HStack, Button, Spacer, Box, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Menu from "./menu";
+import {FaHome} from "react-icons/fa";
 
 function Navbar() {
   return (
@@ -21,7 +22,7 @@ function Navbar() {
           {window.location.href.replace("http://localhost:3000/", "") ===
           "adddetails" ? (
             <Link to="/home">
-              <Button>Home</Button>
+              <Button><FaHome/></Button>
             </Link>
           ) : (
             <Text></Text>
@@ -44,18 +45,22 @@ function Navbar() {
                   name: "",
                   email: "",
                   password: "",
-                  personal: {
-                    name: "",
-                    email: "",
-                    phone: "",
-                    description: "",
+                  personal:{
+                    name:"",
+                    email:"",
+                    phone:"",
+                    gender:"",
+                    dob:"",
+                    description:"",
                   },
-                  education: {
+                  education:{
+                    highestQualification: "",
+                    result: "",
                     collage: "",
-                    location: "",
-                    type: "",
+                    passing: "",
+                    courseName: "",
                     specialize: "",
-                  },
+                  }
                 })
               );
               window.location.href = "/login";

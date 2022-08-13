@@ -20,30 +20,33 @@ import { Field, Form, Formik } from "formik";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
-import PerosonalDetails from "./personalForm";
-import EducationDetails from "./educationForm";
+import PerosonalDetails from "./forms/personalForm";
+import EducationDetails from "./forms/educationForm";
+import Tabs from "./tabs";
 function AddDetails() {
   const user = JSON.parse(localStorage.getItem("user")); //from localstorage
   if (!user) {
     console.log("no user in home");
     window.location.href = "/signup";
   }
+  const [tabIndex, setTabIndex] = useState(0);
+  const qualificationTabs = ["Diploma", "Graduate", "PostGraduate"];
 
   const [tabs, setTabs] = useState([
     {
-      tabname: "personal",
+      tabname: "Personal",
       activeStatus: true,
     },
     {
-      tabname: "education",
+      tabname: "Education",
       activeStatus: false,
     },
     {
-      tabname: "experience",
+      tabname: "Experience",
       activeStatus: false,
     },
     {
-      tabname: "skills",
+      tabname: "Skills",
       activeStatus: false,
     },
   ]);
@@ -54,9 +57,13 @@ function AddDetails() {
     description: "",
     email: "",
     phone: "",
+    gender: "",
+    dob: "",
+    highestQualification: "",
     collage: "",
-    location: "",
-    type: "",
+    passing: "",
+    result: "",
+    courseName: "",
     specialize: "",
   });
   const {
@@ -64,20 +71,35 @@ function AddDetails() {
     description,
     email,
     phone,
+    gender,
+    dob,
+    highestQualification,
     collage,
-    location,
-    type,
+    passing,
+    result,
+    courseName,
     specialize,
   } = formData;
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
-    }));
+    });
+    // setFormData((prevState) => ({
+    //   ...prevState,
+    //   highestQualification: qualificationTabs[tabIndex],
+    //   [e.target.name]: e.target.value,
+    // }));
   };
 
   function changeIndex(index) {
+    console.log(tabIndex);
+    setFormData({
+      ...formData,
+      highestQualification: qualificationTabs[tabIndex],
+    });
+    console.log(formData);
     setIndex(index);
     const temp = [...tabs];
     temp.forEach((tab) => {
@@ -86,6 +108,13 @@ function AddDetails() {
     temp[index].activeStatus = true;
     setTabs(temp);
   }
+
+  // function tabData(data) {
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     highestQualification: data,
+  //   }));
+  // }
 
   const submit = async () => {
     await fetch("http://localhost:3001/api/formdetails", {
@@ -99,16 +128,21 @@ function AddDetails() {
           name: name,
           email: email,
           phone: phone,
+          gender: gender,
+          dob: dob,
           description: description,
         },
         education: {
+          highestQualification: highestQualification,
           collage: collage,
-          location: location,
-          type: type,
+          passing: passing,
+          courseName: courseName,
           specialize: specialize,
+          result: result,
         },
       }),
-    }).then((res) => {
+    })
+      .then((res) => {
         res.text().then(async (text) => {
           const body = await JSON.parse(text);
           if (res.status === 200) {
@@ -119,7 +153,8 @@ function AddDetails() {
             console.log(body.message);
           }
         });
-      }).catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -127,15 +162,15 @@ function AddDetails() {
       <Box>
         <Flex>
           <Navbar />
-          <Container id="top" maxW={"7xl"}>
+          <Container id="top" maxW={"8xl"}>
             <Container //Copy this container to add more
               px={{ md: 10, base: 5 }}
               // height={{ md: "xl", base: "lg" }}
-              maxW={"7xl"}
+              maxW={"8xl"}
             >
               <Stack
                 as={Box}
-                pt={{ base: 20, md: "10%" }}
+                pt={{ base: 15, md: "9%" }}
                 textAlign={"left"}
                 spacing={{ base: 1, md: 3 }}
               >
@@ -159,7 +194,7 @@ function AddDetails() {
             </Container>
             <Container //Copy this container to add more
               px={{ md: 10, base: 5 }}
-              maxW={"7xl"}
+              maxW={"8xl"}
             >
               <Stack
                 textAlign={"left"}
@@ -184,45 +219,11 @@ function AddDetails() {
                     colSpan={1}
                     // bg={"green.500"}
                   >
-                    <Flex h={{ base: "full", md: "full" }}>
-                      <Stack
-                        position={{
-                          base: "relative",
-                          lg: "fixed",
-                          sm: "relative",
-                          md: "relative",
-                        }}
-                        mt={{ base: "0", md: "10" }}
-                        direction={{ base: "row", md: "column" }}
-                        spacing={{ base: "1", md: "5" }}
-                      >
-                        {tabs.map((tab, index) => {
-                          return (
-                            <Button
-                              size={{ base: "xs", md: "md" }}
-                              key={index}
-                              onClick={() => {
-                                changeIndex(index);
-                              }}
-                              isActive={tab.activeStatus}
-                              _active={{
-                                boxShadow: "xl",
-                                bg: "purple.600",
-                                color: "white",
-                              }}
-                              bg={"transparent"}
-                              width={{ base: "full", md: "200px" }}
-                            >
-                              {tab.tabname}
-                            </Button>
-                          );
-                        })}
-                      </Stack>
-                    </Flex>
+                    <Tabs tabs={tabs} changeIndex={changeIndex} />
                   </GridItem>
                   <GridItem
                     rowSpan={1}
-                    colSpan={{ base: 1, md: 4 }}
+                    colSpan={{ base: 1, md: 3 }}
                     // bg="green.500"
                   >
                     <Box
@@ -231,6 +232,7 @@ function AddDetails() {
                       borderLeftColor={"gray.200"}
                       //   rounded={"xl"}
                       //   shadow={"md"}
+
                       flex={"1"}
                       h={{ base: "full", md: "full" }}
                     >
@@ -241,20 +243,55 @@ function AddDetails() {
                           description={description}
                           email={email}
                           phone={phone}
+                          gender={gender}
+                          dob={dob}
                           onChange={onChange}
                         />
                       ) : index === 1 ? (
                         <EducationDetails
-                          changeIndex={submit}
+                          changeIndex={changeIndex}
+                          submit={submit}
                           collage={collage}
-                          location={location}
-                          type={type}
+                          passing={passing}
+                          courseName={courseName}
                           specialize={specialize}
+                          result={result}
                           onChange={onChange}
+                          tabIndex={tabIndex}
+                          setTabIndex={setTabIndex}
+                          qualificationTabs={qualificationTabs}
                         />
                       ) : (
                         <Text>Hello</Text>
                       )}
+                    </Box>
+                  </GridItem>
+                  <GridItem
+                    rowSpan={1}
+                    colSpan={{ base: 1, md: 1 }}
+                    // bg="green.500"
+                  >
+                    <Box
+                      width="280px"
+                      height="400px"
+                      // flex={"1"}
+                    >
+                      <Box
+                        position={{
+                          base: "relative",
+                          lg: "fixed",
+                          sm: "relative",
+                          md: "relative",
+                        }}
+                        border={"1px"}
+                        borderColor="gray.100"
+                        isActive
+                        width="280px"
+                        height="400px"
+                        rounded={"xl"}
+                        shadow={"xl"}
+                        // flex={"1"}
+                      ></Box>
                     </Box>
                   </GridItem>
                 </Grid>

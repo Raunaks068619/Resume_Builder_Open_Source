@@ -27,12 +27,16 @@ const InputCard = () => {
           name:"",
           email:"",
           phone:"",
+          gender:"",
+          dob:"",
           description:"",
         },
         education:{
+          highestQualification: "",
+          result: "",
           collage: "",
-          location: "",
-          type: "",
+          passing: "",
+          courseName: "",
           specialize: "",
         }
       }),
