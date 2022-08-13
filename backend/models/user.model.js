@@ -32,11 +32,15 @@ const EducationSchema = mongoose.Schema({
     type: String,
     // required: true,
   },
-  location: {
+  result: {
     type: String,
     // required: true,
   },
-  type: {
+  passing: {
+    type: String,
+    // required: true,
+  },
+  courseName: {
     type: String,
     // required: true,
   },
@@ -61,7 +65,10 @@ const userSchema = new mongoose.Schema({
     // required: true,
   },
   personal: PersonalSchema,
-  education: EducationSchema,
+  education: {
+    highestQualification: { type: String },
+    qualifications: EducationSchema,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

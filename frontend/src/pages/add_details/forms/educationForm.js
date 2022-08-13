@@ -22,12 +22,13 @@ function EducationDetails({
   courseName,
   specialize,
   submit,
-  onChange,
+  onChangeEducation,
   // tabData,
   changeIndex,
   tabIndex,
   setTabIndex,
   qualificationTabs,
+  changeQuali,
 }) {
   const toast = useToast();
   function checkEmpty() {
@@ -38,14 +39,14 @@ function EducationDetails({
       specialize === ""
     ) {
       toast({
-        title: "fill all details",
+        title: "Fill all details",
         position: "top-right",
         status: "error",
         duration: 5000,
       });
     } else {
       toast({
-        title: "uploaded",
+        title: "Saved locally",
         position: "top-right",
         status: "success",
         duration: 5000,
@@ -55,10 +56,12 @@ function EducationDetails({
       //  the function to send Data to server
     }
   }
-
-  function handleClick(index) {
+  function handleChange(index) {
     setTabIndex(index);
+    // console.log(tabIndex)
+    changeQuali(qualificationTabs[index]);
   }
+
   return (
     <VStack align={"right"} spacing={5}>
       <Grid
@@ -69,6 +72,7 @@ function EducationDetails({
         }}
         gap={6}
       >
+        
         <GridItem colSpan={{ base: 1, md: 2 }}>
           <FormControl>
             <FormLabel
@@ -79,9 +83,9 @@ function EducationDetails({
               Highest qualification / Course Pursuing
             </FormLabel>
             <Tabs
-            defaultIndex={tabIndex}
+              // defaultIndex={tabIndex}
               onChange={(index) => {
-                handleClick(index);
+                handleChange(index);
               }}
               variant="soft-rounded"
               colorScheme="purple"
@@ -92,8 +96,8 @@ function EducationDetails({
                     <Tab
                       key={index}
                       fontSize={"sm"}
-                      fontWeight={"semibold"}
                       color={"gray.600"}
+                      fontWeight={"3px"}
                       p={2}
                     >
                       {qualification}
@@ -112,7 +116,7 @@ function EducationDetails({
             type="text"
             name="collage"
             value={collage}
-            onChange={onChange}
+            onChange={onChangeEducation}
           />
         </FormControl>
 
@@ -124,7 +128,7 @@ function EducationDetails({
             type="text"
             name="passing"
             value={passing}
-            onChange={onChange}
+            onChange={onChangeEducation}
           />
         </FormControl>
         <FormControl>
@@ -136,7 +140,7 @@ function EducationDetails({
             type="text"
             name="courseName"
             value={courseName}
-            onChange={onChange}
+            onChange={onChangeEducation}
           />
         </FormControl>
         <FormControl>
@@ -147,16 +151,21 @@ function EducationDetails({
             type="text"
             name="specialize"
             value={specialize}
-            onChange={onChange}
+            onChange={onChangeEducation}
           />
         </FormControl>
         <FormControl>
           <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
             Result (CGPA/Percentage)
           </FormLabel>
-          <Input type="text" name="result" value={result} onChange={onChange} />
+          <Input
+            type="text"
+            name="result"
+            value={result}
+            onChange={onChangeEducation}
+          />
         </FormControl>
-
+        
         <GridItem colSpan={{ base: 1, md: 2 }}>
           <HStack>
             <Spacer />
@@ -169,7 +178,7 @@ function EducationDetails({
               }}
               colorScheme="purple"
             >
-              Submit
+              Save {"&"} continue
             </Button>
           </HStack>
         </GridItem>

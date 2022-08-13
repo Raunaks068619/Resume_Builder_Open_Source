@@ -1,4 +1,12 @@
-import { Stack, Heading, Text, Box, Button, Input, useToast } from "@chakra-ui/react";
+import {
+  Stack,
+  Heading,
+  Text,
+  Box,
+  Button,
+  Input,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -23,22 +31,26 @@ const InputCard = () => {
         name,
         email,
         password,
-        personal:{
-          name:"",
-          email:"",
-          phone:"",
-          gender:"",
-          dob:"",
-          description:"",
+        personal: {
+          name: "",
+          email: "",
+          phone: "",
+          gender: "",
+          dob: "",
+          description: "",
         },
-        education:{
+        education: {
           highestQualification: "",
-          result: "",
-          collage: "",
-          passing: "",
-          courseName: "",
-          specialize: "",
-        }
+          qualifications: [
+            {
+              result: "",
+              collage: "",
+              passing: "",
+              courseName: "",
+              specialize: "",
+            },
+          ],
+        },
       }),
     })
       .then((res) => {
@@ -49,7 +61,7 @@ const InputCard = () => {
             console.log(body.user);
             localStorage.setItem("user", JSON.stringify(body.user));
             // window.location.href = "/home"; //opens in same tab
-            toHome(body.user)
+            toHome(body.user);
           } else {
             showErrorToast(body.message);
           }
@@ -67,7 +79,7 @@ const InputCard = () => {
     toast({
       title: "Successfully registered",
       description: des,
-      position:"top-right",
+      position: "top-right",
       status: "success",
       duration: 5000,
     });
@@ -76,7 +88,7 @@ const InputCard = () => {
     toast({
       title: "Not registered",
       description: des,
-      position:"top-right",
+      position: "top-right",
       status: "error",
       duration: 5000,
     });

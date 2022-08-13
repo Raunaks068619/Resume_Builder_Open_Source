@@ -29,9 +29,9 @@ function AddDetails() {
     console.log("no user in home");
     window.location.href = "/signup";
   }
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(2);
   const qualificationTabs = ["Diploma", "Graduate", "PostGraduate"];
-
+  const [highestQualification, setHighestQualification] = useState("Diploma");
   const [tabs, setTabs] = useState([
     {
       tabname: "Personal",
@@ -52,54 +52,50 @@ function AddDetails() {
   ]);
 
   const [index, setIndex] = useState(0);
-  const [formData, setFormData] = useState({
+  // personalForm functions
+  const [personalData, setPersonalData] = useState({
     name: "",
     description: "",
     email: "",
     phone: "",
     gender: "",
     dob: "",
-    highestQualification: "",
+  });
+  const { name, description, email, phone, gender, dob } = personalData;
+  const onChangePersonal = (e) => {
+    setPersonalData({
+      ...personalData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  //////
+  // educationForm functions
+  const [educationData, setEducationData] = useState({
     collage: "",
     passing: "",
     result: "",
     courseName: "",
     specialize: "",
   });
-  const {
-    name,
-    description,
-    email,
-    phone,
-    gender,
-    dob,
-    highestQualification,
-    collage,
-    passing,
-    result,
-    courseName,
-    specialize,
-  } = formData;
-
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
+  const { collage, passing, result, courseName, specialize } = [educationData];
+  const onChangeEducation = (e) => {
+    setEducationData({
+      ...educationData,
       [e.target.name]: e.target.value,
     });
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   highestQualification: qualificationTabs[tabIndex],
-    //   [e.target.name]: e.target.value,
-    // }));
   };
+  function changeQuali(i) {
+    const temp = i;
+    setHighestQualification(temp);
+  }
+  useEffect(() => {
+    console.log(highestQualification);
+  }, [highestQualification]);
+  // ///////
 
   function changeIndex(index) {
-    console.log(tabIndex);
-    setFormData({
-      ...formData,
-      highestQualification: qualificationTabs[tabIndex],
-    });
-    console.log(formData);
+    console.log(personalData);
+    console.log(educationData);
     setIndex(index);
     const temp = [...tabs];
     temp.forEach((tab) => {
@@ -124,21 +120,10 @@ function AddDetails() {
       },
       body: JSON.stringify({
         email: user.email,
-        personal: {
-          name: name,
-          email: email,
-          phone: phone,
-          gender: gender,
-          dob: dob,
-          description: description,
-        },
+        personal: personalData,
         education: {
           highestQualification: highestQualification,
-          collage: collage,
-          passing: passing,
-          courseName: courseName,
-          specialize: specialize,
-          result: result,
+          qualifications: educationData,
         },
       }),
     })
@@ -170,10 +155,11 @@ function AddDetails() {
             >
               <Stack
                 as={Box}
-                pt={{ base: 15, md: "9%" }}
+                pt={{ base: "10%", md: "9%" }}
                 textAlign={"left"}
                 spacing={{ base: 1, md: 3 }}
               >
+                
                 <Heading
                   // textAlign={"center"}
                   fontWeight={"semibold"}
@@ -213,6 +199,7 @@ function AddDetails() {
                   }}
                   gap={10}
                 >
+                  
                   <GridItem
                     h={{ base: "full", md: "450px" }}
                     rowSpan={1}
@@ -245,7 +232,7 @@ function AddDetails() {
                           phone={phone}
                           gender={gender}
                           dob={dob}
-                          onChange={onChange}
+                          onChangePersonal={onChangePersonal}
                         />
                       ) : index === 1 ? (
                         <EducationDetails
@@ -256,10 +243,11 @@ function AddDetails() {
                           courseName={courseName}
                           specialize={specialize}
                           result={result}
-                          onChange={onChange}
+                          onChangeEducation={onChangeEducation}
                           tabIndex={tabIndex}
                           setTabIndex={setTabIndex}
                           qualificationTabs={qualificationTabs}
+                          changeQuali={changeQuali}
                         />
                       ) : (
                         <Text>Hello</Text>

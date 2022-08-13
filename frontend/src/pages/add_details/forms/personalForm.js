@@ -2,8 +2,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   useToast,
   VStack,
@@ -23,7 +21,7 @@ function PerosonalDetails({
   dob,
   changeIndex,
   isError,
-  onChange,
+  onChangePersonal,
 }) {
   const toast = useToast();
   function checkEmpty() {
@@ -73,7 +71,7 @@ function PerosonalDetails({
             placeholder="Preffered Name"
             name="name"
             value={name}
-            onChange={onChange}
+            onChange={onChangePersonal}
           />
         </FormControl>
 
@@ -86,7 +84,7 @@ function PerosonalDetails({
             placeholder="example@gmail.com"
             name="email"
             value={email}
-            onChange={onChange}
+            onChange={onChangePersonal}
           />
         </FormControl>
         <FormControl isInvalid={isError}>
@@ -98,7 +96,7 @@ function PerosonalDetails({
             placeholder="+(code) Mobile"
             name="phone"
             value={phone}
-            onChange={onChange}
+            onChange={onChangePersonal}
           />
         </FormControl>
         <FormControl isInvalid={isError}>
@@ -110,7 +108,7 @@ function PerosonalDetails({
             placeholder="Male / Female"
             name="gender"
             value={gender}
-            onChange={onChange}
+            onChange={onChangePersonal}
           />
         </FormControl>
         <FormControl isInvalid={isError}>
@@ -122,7 +120,7 @@ function PerosonalDetails({
             placeholder="DD / MM / YYYY"
             name="dob"
             value={dob}
-            onChange={onChange}
+            onChange={onChangePersonal}
           />
         </FormControl>
         <GridItem colSpan={{ base: 1, md: 2 }}>
@@ -139,7 +137,7 @@ function PerosonalDetails({
               type="text"
               name="description"
               value={description}
-              onChange={onChange}
+              onChange={onChangePersonal}
             />
           </FormControl>
         </GridItem>
