@@ -70,20 +70,37 @@ function AddDetails() {
   };
   //////
   // educationForm functions
-  const [educationData, setEducationData] = useState({
-    collage: "",
-    passing: "",
-    result: "",
-    courseName: "",
-    specialize: "",
-  });
-  const { collage, passing, result, courseName, specialize } = [educationData];
-  const onChangeEducation = (e) => {
-    setEducationData({
-      ...educationData,
-      [e.target.name]: e.target.value,
-    });
+  const [list, setList] = useState([
+    {
+      collage: "",
+      passing: "",
+      result: "",
+      courseName: "",
+      specialize: "",
+    },
+  ]);
+  const onChangeList = (e, index) => {
+    let tempList = [...list];
+    tempList[index][e.target.name] = e.target.value;
+    setList(tempList);
   };
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
+  // const [educationData, setEducationData] = useState({
+  //   collage: "",
+  //   passing: "",
+  //   result: "",
+  //   courseName: "",
+  //   specialize: "",
+  // });
+  // const { collage, passing, result, courseName, specialize } = educationData;
+  // const onChangeEducation = (e) => {
+  //   setEducationData({
+  //     ...educationData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
   function changeQuali(i) {
     const temp = i;
     setHighestQualification(temp);
@@ -95,7 +112,7 @@ function AddDetails() {
 
   function changeIndex(index) {
     console.log(personalData);
-    console.log(educationData);
+    // console.log(educationData);
     setIndex(index);
     const temp = [...tabs];
     temp.forEach((tab) => {
@@ -123,7 +140,7 @@ function AddDetails() {
         personal: personalData,
         education: {
           highestQualification: highestQualification,
-          qualifications: educationData,
+          qualifications: list,
         },
       }),
     })
@@ -159,7 +176,6 @@ function AddDetails() {
                 textAlign={"left"}
                 spacing={{ base: 1, md: 3 }}
               >
-                
                 <Heading
                   // textAlign={"center"}
                   fontWeight={"semibold"}
@@ -199,7 +215,6 @@ function AddDetails() {
                   }}
                   gap={10}
                 >
-                  
                   <GridItem
                     h={{ base: "full", md: "450px" }}
                     rowSpan={1}
@@ -238,16 +253,19 @@ function AddDetails() {
                         <EducationDetails
                           changeIndex={changeIndex}
                           submit={submit}
-                          collage={collage}
-                          passing={passing}
-                          courseName={courseName}
-                          specialize={specialize}
-                          result={result}
-                          onChangeEducation={onChangeEducation}
+                          // collage={collage}
+                          // passing={passing}
+                          // courseName={courseName}
+                          // specialize={specialize}
+                          // result={result}
+                          // onChangeEducation={onChangeEducation}
                           tabIndex={tabIndex}
                           setTabIndex={setTabIndex}
                           qualificationTabs={qualificationTabs}
                           changeQuali={changeQuali}
+                          list={list}
+                          setList={setList}
+                          onChangeList={onChangeList}
                         />
                       ) : (
                         <Text>Hello</Text>

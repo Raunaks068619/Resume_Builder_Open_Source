@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
   personal: PersonalSchema,
   education: {
     highestQualification: { type: String },
-    qualifications: EducationSchema,
+    qualifications: [EducationSchema],
   },
 });
 

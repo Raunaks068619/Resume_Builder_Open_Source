@@ -42,13 +42,13 @@ const InputCard = () => {
         education: {
           highestQualification: "",
           qualifications: [
-            {
-              result: "",
-              collage: "",
-              passing: "",
-              courseName: "",
-              specialize: "",
-            },
+            // {
+            //   result: "",
+            //   collage: "",
+            //   passing: "",
+            //   courseName: "",
+            //   specialize: "",
+            // },
           ],
         },
       }),

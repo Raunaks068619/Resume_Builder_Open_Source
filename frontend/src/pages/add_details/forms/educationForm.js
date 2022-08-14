@@ -16,27 +16,30 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 function EducationDetails({
-  result,
-  collage,
-  passing,
-  courseName,
-  specialize,
+  // result,
+  // collage,
+  // passing,
+  // courseName,
+  // specialize,
   submit,
-  onChangeEducation,
+  // onChangeEducation,
   // tabData,
   changeIndex,
   tabIndex,
   setTabIndex,
   qualificationTabs,
   changeQuali,
+  list,
+  setList,
+  onChangeList,
 }) {
   const toast = useToast();
   function checkEmpty() {
     if (
-      collage === "" ||
-      passing === "" ||
-      courseName === "" ||
-      specialize === ""
+      list.collage === "" ||
+      list.passing === "" ||
+      list.courseName === "" ||
+      list.specialize === ""
     ) {
       toast({
         title: "Fill all details",
@@ -51,7 +54,8 @@ function EducationDetails({
         status: "success",
         duration: 5000,
       });
-      changeIndex(2);
+      
+      // changeIndex(2);
       // submit();
       //  the function to send Data to server
     }
@@ -64,16 +68,15 @@ function EducationDetails({
 
   return (
     <VStack align={"right"} spacing={5}>
-      <Grid
+      {/* <Grid
         // templateRows={"repeat(5, 1fr)"}
         templateColumns={{
           base: "repeat(1, 1fr)",
-          md: "repeat(2, 1fr)",
+          md: "repeat(1, 1fr)",
         }}
         gap={6}
-      >
-        
-        <GridItem colSpan={{ base: 1, md: 2 }}>
+      > */}
+        {/* <GridItem colSpan={{ base: 1, md: 2 }}> */}
           <FormControl>
             <FormLabel
               fontSize={"sm"}
@@ -107,82 +110,139 @@ function EducationDetails({
               </TabList>
             </Tabs>
           </FormControl>
-        </GridItem>
-        <FormControl>
-          <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
-            Collage Name
-          </FormLabel>
-          <Input
-            type="text"
-            name="collage"
-            value={collage}
-            onChange={onChangeEducation}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
-            Passing Year
-          </FormLabel>
-          <Input
-            type="text"
-            name="passing"
-            value={passing}
-            onChange={onChangeEducation}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
-            Course Name
-          </FormLabel>
-          <Input
-            placeholder="eg. B.E, B.Tech, M.E, M.Tech"
-            type="text"
-            name="courseName"
-            value={courseName}
-            onChange={onChangeEducation}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
-            Specialization
-          </FormLabel>
-          <Input
-            type="text"
-            name="specialize"
-            value={specialize}
-            onChange={onChangeEducation}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontSize={"sm"} fontWeight={"semibold"} color={"gray.600"}>
-            Result (CGPA/Percentage)
-          </FormLabel>
-          <Input
-            type="text"
-            name="result"
-            value={result}
-            onChange={onChangeEducation}
-          />
-        </FormControl>
-        
-        <GridItem colSpan={{ base: 1, md: 2 }}>
-          <HStack>
-            <Spacer />
-            <Button
-              //   width={"200px"}
-              bg={"purple.600"}
-              mt={4}
-              onClick={() => {
-                checkEmpty();
-              }}
-              colorScheme="purple"
-            >
-              Save {"&"} continue
-            </Button>
-          </HStack>
-        </GridItem>
-      </Grid>
+        {/* </GridItem> */}
+        {list.map((item, index) => {
+          return (
+            <div key={index}>
+              <Grid
+                // templateRows={"repeat(5, 1fr)"}
+                templateColumns={{
+                  base: "repeat(1, 1fr)",
+                  md: "repeat(2, 1fr)",
+                }}
+                gap={6}
+              >
+                <FormControl>
+                  <FormLabel
+                    fontSize={"sm"}
+                    fontWeight={"semibold"}
+                    color={"gray.600"}
+                  >
+                    Collage Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    name="collage"
+                    value={item.collage}
+                    onChange={(e)=>{onChangeList(e,index)}}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    fontSize={"sm"}
+                    fontWeight={"semibold"}
+                    color={"gray.600"}
+                  >
+                    Passing Year
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    name="passing"
+                    value={item.passing}
+                    onChange={(e)=>{onChangeList(e,index)}}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    fontSize={"sm"}
+                    fontWeight={"semibold"}
+                    color={"gray.600"}
+                  >
+                    Course Name
+                  </FormLabel>
+                  <Input
+                    placeholder="eg. B.E, B.Tech, M.E, M.Tech"
+                    type="text"
+                    name="courseName"
+                    value={item.courseName}
+                    onChange={(e)=>{onChangeList(e,index)}}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    fontSize={"sm"}
+                    fontWeight={"semibold"}
+                    color={"gray.600"}
+                  >
+                    Specialization
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    name="specialize"
+                    value={item.specialize}
+                    onChange={(e)=>{onChangeList(e,index)}}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    fontSize={"sm"}
+                    fontWeight={"semibold"}
+                    color={"gray.600"}
+                  >
+                    Result (CGPA/Percentage)
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    name="result"
+                    value={item.result}
+                    onChange={(e)=>{onChangeList(e,index)}}
+                  />
+                </FormControl>
+                <GridItem colSpan={{ base: 1, md: 2 }}>
+                  <HStack>
+                    <Spacer />
+                    <Button
+                      //   width={"200px"}
+                      bg={"purple.600"}
+                      mt={4}
+                      onClick={() => {
+                        setList(list.filter((_, i) => i !== index));
+                      }}
+                      colorScheme="purple"
+                    >
+                     delete
+                    </Button>
+                    <Button
+                      //   width={"200px"}
+                      bg={"purple.600"}
+                      mt={4}
+                      onClick={() => {
+                        console.log(list);
+                      }}
+                      colorScheme="purple"
+                    >
+                     Save
+                    </Button>
+                    
+                  </HStack>
+                </GridItem>
+              </Grid>
+            </div>
+          );
+        })}
+      {/* </Grid> */}
+      <Button
+                      //   width={"200px"}
+                      bg={"purple.600"}
+                      mt={4}
+                      onClick={() => {
+                        checkEmpty();
+                        setList(oldList=>[...oldList,{collage:"",passing:"",courseName:"",specialize:"",result:""}])
+                      }}
+                      colorScheme="purple"
+                    >
+                      Add new 
+                    </Button>
     </VStack>
   );
 }
