@@ -87,20 +87,7 @@ function AddDetails() {
   useEffect(() => {
     console.log(list);
   }, [list]);
-  // const [educationData, setEducationData] = useState({
-  //   collage: "",
-  //   passing: "",
-  //   result: "",
-  //   courseName: "",
-  //   specialize: "",
-  // });
-  // const { collage, passing, result, courseName, specialize } = educationData;
-  // const onChangeEducation = (e) => {
-  //   setEducationData({
-  //     ...educationData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+
   function changeQuali(i) {
     const temp = i;
     setHighestQualification(temp);
@@ -108,7 +95,7 @@ function AddDetails() {
   useEffect(() => {
     console.log(highestQualification);
   }, [highestQualification]);
-  // ///////
+  /////////
 
   function changeIndex(index) {
     console.log(personalData);
@@ -121,13 +108,6 @@ function AddDetails() {
     temp[index].activeStatus = true;
     setTabs(temp);
   }
-
-  // function tabData(data) {
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     highestQualification: data,
-  //   }));
-  // }
 
   const submit = async () => {
     await fetch("http://localhost:3001/api/formdetails", {
@@ -149,6 +129,7 @@ function AddDetails() {
           const body = await JSON.parse(text);
           if (res.status === 200) {
             console.log(body.user);
+            const temp = body.user;
             localStorage.setItem("user", JSON.stringify(body.user));
             // window.location.href = "/home"; //opens in same tab
           } else {
@@ -253,12 +234,6 @@ function AddDetails() {
                         <EducationDetails
                           changeIndex={changeIndex}
                           submit={submit}
-                          // collage={collage}
-                          // passing={passing}
-                          // courseName={courseName}
-                          // specialize={specialize}
-                          // result={result}
-                          // onChangeEducation={onChangeEducation}
                           tabIndex={tabIndex}
                           setTabIndex={setTabIndex}
                           qualificationTabs={qualificationTabs}

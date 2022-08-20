@@ -67,8 +67,9 @@ const userSchema = new mongoose.Schema({
   personal: PersonalSchema,
   education: {
     highestQualification: { type: String },
-    qualifications: [EducationSchema],
+    qualifications: [],
   },
 });
+
 
 module.exports = mongoose.model("User", userSchema);

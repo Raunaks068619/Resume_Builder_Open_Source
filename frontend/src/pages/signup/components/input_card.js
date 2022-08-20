@@ -31,26 +31,18 @@ const InputCard = () => {
         name,
         email,
         password,
-        personal: {
-          name: "",
-          email: "",
-          phone: "",
-          gender: "",
-          dob: "",
-          description: "",
-        },
-        education: {
-          highestQualification: "",
-          qualifications: [
-            // {
-            //   result: "",
-            //   collage: "",
-            //   passing: "",
-            //   courseName: "",
-            //   specialize: "",
-            // },
-          ],
-        },
+        // personal: {
+        //   name: "",
+        //   email: "",
+        //   phone: "",
+        //   gender: "",
+        //   dob: "",
+        //   description: "",
+        // },
+        // education: {
+        //   highestQualification: "",
+        //   qualifications: [],
+        // },
       }),
     })
       .then((res) => {

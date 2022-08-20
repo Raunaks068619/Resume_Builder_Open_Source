@@ -79,6 +79,7 @@ router.post("/formdetails", async (req, res) => {
   const email = req.body.email;
   const personal = req.body.personal;
   const education = req.body.education;
+  console.log(education);
   try {
     User.updateOne(
       { email: email },
